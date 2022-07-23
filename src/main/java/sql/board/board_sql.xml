@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="board">
+    
+    <resultMap type="com.spring.board.vo.BoardVo" id="boardVo">
+    	<result property="boardType" 	column="BOARD_TYPE"/>
+    	<result property="boardNum" 	column="BOARD_NUM"/>
+    	<result property="boardTitle" 	column="BOARD_TITLE"/>
+    	<result property="boardComment" column="BOARD_COMMENT"/>
+    	<association property="codeVo" javaType="com.spring.board.vo.CodeVo">
+    		<result property="codeId" 	column="CODE_ID"/>
+    		<result property="codeName" column="CODE_NAME"/>
+    	</association>
+    </resultMap>
+    
+     <resultMap type="com.spring.board.vo.CodeVo" id="codeVo">
+    	<result property="codeType" 	column="CODE_TYPE"/>
+    	<result property="codeId" 	column="CODE_ID"/>
+    	<result property="codeName" 	column="CODE_NAME"/>
+    	<result property="creator" column="CREATOR"/>
+    	<result property="createTime" column="CREATE_TIME"/>
+    	<result property="modifier" column="MODIFIER"/>
+    	<result property="modifiedTime" column="MODIFIED_TIME"/>
+    </resultMap>
+    
+    <!-- collection: 전달받는 인자값(반드시 배열/리스트 형태) -->
+    <!-- open: 해당구문이 시작할 때 넣을 문자 -->
+    <!-- close: 해당구문이 끝날 때 넣을 문자 -->
+    <!-- separator: 한번이상이 반복할때 사이에 넣는 문자 -->
+    <sql id="search"> 
+    	<if test="codeId != ''">
+    		 WHERE CODE_ID IN 
+        	<foreach item="item" index="index" collection="codeId.split(',')"  open="(" separator="," close=")">
+            	#{item}
+        	</foreach>
+		</if>
+    </sql>
+    
+    
+    <select id="boardList" parameterType="com.spring.board.vo.CodeVo" resultMap="boardVo">
+      SELECT 
+		  BOARD_TYPE
+		  ,BOARD_NUM
+		  ,BOARD_TITLE
+		  ,BOARD_COMMENT
+		  ,TOTAL_CNT
+          ,CODE_ID
+          ,CODE_NAME
+		FROM 
+			(
+		  SELECT
+		      	A.BOARD_TYPE
+				,A.BOARD_NUM
+				,A.BOARD_TITLE
+				,A.BOARD_COMMENT
+		      	,ROW_NUMBER() OVER(ORDER BY BOARD_NUM DESC) AS NUMROW
+		      	,COUNT(*) OVER() AS TOTAL_CNT
+                ,B.CODE_ID
+                ,B.CODE_NAME
+			FROM BOARD A INNER JOIN COM_CODE B
+				ON A.BOARD_TYPE = B.CODE_ID
+				<include refid="search"/>
+		)
+		WHERE NUMROW BETWEEN (#{pageNo}-1)*10 + 1 AND (#{pageNo})*10
+		
+    </select>
+    
+    <select id="boardTotal" parameterType="Integer" resultType="Integer">
+		   SELECT
+		 COUNT(*) AS TOTAL_CNT
+			 FROM BOARD  INNER JOIN COM_CODE 
+               ON BOARD_TYPE = CODE_ID
+		 <include refid="search"/>
+    </select>
+    	
+    <select id="boardView" parameterType="com.spring.board.vo.BoardVo" resultMap="boardVo">
+    	SELECT	
+         	   A.BOARD_TYPE
+			  ,A.BOARD_NUM
+			  ,A.BOARD_TITLE
+			  ,A.BOARD_COMMENT
+              ,B.CODE_NAME
+		 FROM BOARD A INNER JOIN COM_CODE B
+		   ON A.BOARD_TYPE = B.CODE_ID
+    	WHERE A.BOARD_TYPE = #{boardType}
+          AND A.BOARD_NUM  = #{boardNum}
+    </select>	
+    
+    <!-- 코드네임(TYPE 조회) -->
+    <select id="codeNameSelect" parameterType="com.spring.board.vo.CodeVo" resultMap="codeVo">
+	    SELECT CODE_NAME
+	    	, CODE_ID
+	      FROM COM_CODE 
+	     WHERE CODE_TYPE = 'menu'
+    </select>
+    
+    <insert id="boardInsert" parameterType="com.spring.board.vo.BoardVo">
+    	
+        INSERT INTO 
+        BOARD
+        (BOARD_TYPE
+        ,BOARD_NUM
+        ,BOARD_TITLE
+        ,BOARD_COMMENT
+        ,CREATOR
+        ,CREATE_TIME
+        ,MODIFIER
+        ,MODIFIED_TIME
+        )
+        VALUES
+        (#{boardType}
+        ,( SELECT NVL(MAX(BOARD_NUM), 0) +1  
+        FROM BOARD)
+        ,#{boardTitle}
+        ,#{boardComment}
+        ,'SYSTEM'
+        ,TO_CHAR(SYSDATE)
+        ,'SYSTEM'
+        ,TO_CHAR(SYSDATE)
+        )
+    </insert>
+    
+    <!-- 게시글 수정 -->
+    <update id="updateBoard" parameterType="com.spring.board.vo.BoardVo">
+    	UPDATE BOARD 
+		   SET BOARD_TITLE = #{boardTitle},
+               BOARD_COMMENT = #{boardComment}
+	     WHERE BOARD_TYPE = #{boardType}
+	       AND BOARD_NUM  = #{boardNum} 	
+    </update>
+    
+    <!-- 게시글 삭제 -->
+    <delete id="deleteBoard" parameterType="com.spring.board.vo.BoardVo">
+    	DELETE FROM BOARD
+	     WHERE BOARD_TYPE = #{boardType}
+           AND BOARD_NUM  = #{boardNum} 	
+    </delete>
+    
+</mapper>

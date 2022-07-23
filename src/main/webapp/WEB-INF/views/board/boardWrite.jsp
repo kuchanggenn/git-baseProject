@@ -87,64 +87,6 @@ $j(document).ready(function(){
 			
 			var param = $frm.serialize();
 			console.log(param);
-			
-		/* 	for(i=0; i<arr.size; i++) {
-				 param = changeSerialize(param, "boardTitle", arr[0]);
-			}
-			 
-			
-					
-			function changeSerialize(values, k, v) {
-				var found = false;
-				console.log("값길이: " + size);
-				for (i = 0; i < size || !found; i++) {
-					
-			        if ( values[i].name == k ) { 
-
-			            values[i].value = v.replace(/,/g, '!!');
-						console.log("boardTitle" + i + " :" + boardTitle)
-			            found = true;
-
-			        }
-
-			    }
- 				if(!found) {
-					values.push (
-						{
-							name : k,
-							value : v
-						}	
-					);
-				} 
-				return values;
-			}   */
-			
-		 	/* param = changeSerialize(param, "boardTitle", boardTitle);
-			
-			function changeSerialize(values, k, v) {
-				var found = false;
-				console.log("값길이: " + size);
-				for (i = 0; i < size || !found; i++) {
-					
-			        if ( values[i].name == k ) { 
-
-			            values[i].value = v.replace(/,/g, '!!');
-
-			            found = true;
-
-			        }
-
-			    }
- 				if(!found) {
-					values.push (
-						{
-							name : k,
-							value : v
-						}	
-					);
-				} 
-				return values;
-			}  */
 					 
 		   $j.ajax({
 			    url : "/board/boardWriteAction.do",

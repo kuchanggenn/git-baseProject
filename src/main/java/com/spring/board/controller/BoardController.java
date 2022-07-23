@@ -127,148 +127,11 @@ public class BoardController {
 		return "board/boardWrite";	
 	}
 	
-
-//	@RequestMapping(value = "/board/boardWriteAction.do", method = RequestMethod.POST)
-//	@ResponseBody
-//	public String boardWriteAction(Locale locale, HttpServletRequest request,
-//								   String[] boardTitle, String[] boardComment) throws Exception{
-//		
-////		System.out.println("타이틀값  " + params.get("boardTitle"));
-////		System.out.println("컨텐트값  " + params.get("boardComment"));
-////		System.out.println("타이틀값  " + params.get("boardTitle"));
-////		System.out.println("컨텐트값  " + params.get("boardComment"));
-//		
-////		HashMap<String, Object> paramMap = new HashMap<String, Object>();
-////		
-////		HashMap<String, Object> titleCommentMap = null;
-////		
-////		List<HashMap<String, Object>> titleCommentList = new ArrayList<HashMap<String, Object>>();
-////		for (int i=0; i<2; i++) {
-////			
-////			titleCommentMap = new HashMap<String, Object>();
-////			titleCommentMap.put("boardTitle", params);
-////			titleCommentMap.put("boardComment", params);
-////			
-////			titleCommentList.add(titleCommentMap);
-////		}
-////		paramMap.put("titleCommentList", titleCommentList);
-//		
-////		HashMap<String, Object> titleCommentMap = new HashMap<String, Object>();
-////		
-////		List<Map<String, Object>> titleCommentList = (List<Map<String, Object>>) params.get("data");
-////		titleCommentMap.put("titleCommentList", titleCommentList);	
-//		
-////		System.out.println("-------------------------------");
-////		System.out.println("컨트롤러로 오는 title: " + boardVo.get
-////		System.out.println("컨트롤러로 오는 comment: " + boardVo.getBoardComment());
-////		System.out.println("전체" + boardVo);
-////		System.out.println("-------------------------------");
-//		
-////		System.out.println("-------------------------------");
-////		
-////		System.out.println(boardVo);
-////		for(int i=0; i<boardVo.getBoardTtile_List().length; i++) {
-////			boardVo.setBoardTitle(boardVo.getBoardTtile_List()[i]);
-////			boardVo.setBoardComment(boardVo.getBoardComment_List()[i]);
-////		}
-////		
-////		
-////		System.out.println("-------------------------------");
-//		
-////		System.out.println("-------------------------------");
-////		
-////		
-////		
-////		
-////		
-////		String boardTitleStr = boardVo.getBoardTitle();
-////		String boardCommentStr = boardVo.getBoardComment();
-//		
-////		System.out.println("1111111-------------------------------");
-////		System.out.println("타이틀:  " + boardVo.getBoardTitle());
-////		System.out.println("내용들:  " + boardVo.getBoardComment());
-////		System.out.println("1111111-------------------------------");
-////			
-////		String[] BoardTitleArr = boardTitleStr.split(",");
-////		String[] BoardCommentArr = boardCommentStr.split(",");	
-////		
-////		
-////		
-////		if(BoardTitleArr.length == 0) {
-////			boardService.boardInsert(boardVo);
-////			resultCnt++;
-////		} else {		
-////			for (int i=0; i<BoardTitleArr.length; i++) {
-////				boardVo.setBoardTitle(BoardTitleArr[i]);
-////				boardVo.setBoardComment(BoardCommentArr[i]);
-////				boardService.boardInsert(boardVo);
-////				resultCnt++;
-////			}	
-////		}
-//		
-//		
-//		int resultCnt = boardService.boardInsert(boardTitle, boardComment);
-//		
-//		
-//		HashMap<String, String> result = new HashMap<String, String>();
-//		CommonUtil commonUtil = new CommonUtil();
-//		
-//	
-//		
-//		result.put("success", (resultCnt > 0)?"Y":"N");
-//		String callbackMsg = commonUtil.getJsonCallBackString(" ",result);
-//		
-//		
-//		System.out.println("callbackMsg::"+callbackMsg);
-//		
-//		
-//		
-//		return callbackMsg;
-//	}
 	
 	@RequestMapping(value = "/board/boardWriteAction.do", method = RequestMethod.POST)
 	@ResponseBody
 	public String boardWriteAction(Locale locale, HttpServletRequest request,
 								   BoardVo boardVo) throws Exception{
-		
-//		System.out.println("타이틀값  " + params.get("boardTitle"));
-//		System.out.println("컨텐트값  " + params.get("boardComment"));
-//		System.out.println("타이틀값  " + params.get("boardTitle"));
-//		System.out.println("컨텐트값  " + params.get("boardComment"));
-//		
-//		HashMap<String, Object> paramMap = new HashMap<String, Object>();
-//	
-//		HashMap<String, Object> titleCommentMap = null;
-//		
-//		List<HashMap<String, Object>> titleCommentList = new ArrayList<HashMap<String, Object>>();
-//		for (int i=0; i<2; i++) {
-//			
-//			titleCommentMap = new HashMap<String, Object>();
-//			titleCommentMap.put("boardTitle", params);
-//			titleCommentMap.put("boardComment", params);
-//			
-//			titleCommentList.add(titleCommentMap);
-//		}
-//		paramMap.put("titleCommentList", titleCommentList);
-//	
-//		HashMap<String, Object> titleCommentMap = new HashMap<String, Object>();
-//		
-//		List<Map<String, Object>> titleCommentList = (List<Map<String, Object>>) params.get("data");
-//		titleCommentMap.put("titleCommentList", titleCommentList);	
-//
-//		System.out.println("-------------------------------");
-//		System.out.println("컨트롤러로 오는 title: " + boardVo.get
-//		System.out.println("컨트롤러로 오는 comment: " + boardVo.getBoardComment());
-//		System.out.println("전체" + boardVo);
-//		System.out.println("-------------------------------");
-//		
-//		System.out.println("-------------------------------");
-//		
-//		System.out.println(boardVo);
-//		for(int i=0; i<boardVo.getBoardTtile_List().length; i++) {
-//			boardVo.setBoardTitle(boardVo.getBoardTtile_List()[i]);
-//			boardVo.setBoardComment(boardVo.getBoardComment_List()[i]);
-//		}		
 		
 		List<BoardVo> boardList = boardVo.getBoardVoList();
 		System.out.println("컨트롤에서 받은 boardList: " + boardList);
@@ -286,53 +149,27 @@ public class BoardController {
 	
 		
 		
-//		int resultCnt = 0;
-//		if(BoardTitleArr.length == 0) {
-//			boardService.boardInsert(boardVo);
-//			resultCnt++;
-//		} else {		
-//			for (int i=0; i<BoardTitleArr.length; i++) {
-//				boardVo.setBoardType(BoardCodeTypeArr[i]);
-//				boardVo.setBoardTitle(BoardTitleArr[i]);
-//				boardVo.setBoardComment(BoardCommentArr[i]);
-//				boardService.boardInsert(boardVo);
-//				resultCnt++;
-//			}	
-//		}
+		int resultCnt = 0;
+		if(BoardTitleArr.length == 0) {
+			boardService.boardInsert(boardVo);
+			resultCnt++;
+		} else {		
+			for (int i=0; i<BoardTitleArr.length; i++) {
+				boardVo.setBoardType(BoardCodeTypeArr[i]);
+				boardVo.setBoardTitle(BoardTitleArr[i]);
+				boardVo.setBoardComment(BoardCommentArr[i]);
+				boardService.boardInsert(boardVo);
+				resultCnt++;
+			}	
+		}
 			
+		HashMap<String, String> result = new HashMap<String, String>();
+		CommonUtil commonUtil = new CommonUtil();
 		
-//		String boardTitleStr = boardVo.getBoardTitle();
-//		String boardCommentStr = boardVo.getBoardComment();
-//		String boardCodeTypeStr = boardVo.getBoardType();
-//		
-//		System.out.println("컨트롤로 넘어온 boardType: " + boardVo.getBoardType());
-//		
-//		String[] BoardTitleArr = boardTitleStr.split(",");
-//		String[] BoardCommentArr = boardCommentStr.split(",");	
-//		String[] BoardCodeTypeArr = boardCodeTypeStr.split(",");
-//		
-//		
-//		int resultCnt = 0;
-//		if(BoardTitleArr.length == 0) {
-//			boardService.boardInsert(boardVo);
-//			resultCnt++;
-//		} else {		
-//			for (int i=0; i<BoardTitleArr.length; i++) {
-//				boardVo.setBoardType(BoardCodeTypeArr[i]);
-//				boardVo.setBoardTitle(BoardTitleArr[i]);
-//				boardVo.setBoardComment(BoardCommentArr[i]);
-//				boardService.boardInsert(boardVo);
-//				resultCnt++;
-//			}	
-//		}
-//		
-//		HashMap<String, String> result = new HashMap<String, String>();
-//		CommonUtil commonUtil = new CommonUtil();
-//		
-//		result.put("success", (resultCnt > 0)?"Y":"N");
-//		String callbackMsg = commonUtil.getJsonCallBackString(" ",result);
-//				
-//		System.out.println("callbackMsg::"+callbackMsg);
+		result.put("success", (resultCnt > 0)?"Y":"N");
+		String callbackMsg = commonUtil.getJsonCallBackString(" ",result);
+				
+		System.out.println("callbackMsg::"+callbackMsg);
 	
 		return "";
 	}

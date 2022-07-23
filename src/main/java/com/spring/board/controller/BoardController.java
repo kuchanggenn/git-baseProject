@@ -166,21 +166,15 @@ public class BoardController {
 		HashMap<String, String> result = new HashMap<String, String>();
 		CommonUtil commonUtil = new CommonUtil();
 		
+
 		result.put("success", (resultCnt > 0)?"Y":"N");
 		String callbackMsg = commonUtil.getJsonCallBackString(" ",result);
 				
 		System.out.println("callbackMsg::"+callbackMsg);
 	
-		return "";
+		return "callbackMsg";
 	}
 	
-	
-	
-	private BoardVo arrayParam(String boardTitle) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 	//수정 화면
 	@RequestMapping(value = "/board/{boardType}/{boardNum}/boardModify.do", method = RequestMethod.GET)
 	public String boardModify(Locale locale, Model model,
